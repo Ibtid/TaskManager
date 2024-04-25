@@ -7,11 +7,13 @@ import path from "path";
 
 class TaskController {
   createTask = async (req: Request, res: Response) => {
-    const { title, description } = req.body;
+    const { title, description, date } = req.body;
 
-    if (!title || !description) {
-      throw new Error("Title and description must be provided.");
+    if (!title || !description || !date) {
+      throw new Error("Title and description and date must be provided.");
     }
+
+    req.body.status = 'not_started'
 
     const newTask = await Task.create(req.body);
     res

@@ -4,7 +4,7 @@ interface FormData {
   title: string;
   description: string;
   date: Date;
-  status: "not_started" | "complete";
+  // status: "not_started" | "complete";
 }
 
 interface FormErrors {
