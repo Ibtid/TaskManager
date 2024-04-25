@@ -5,6 +5,7 @@ import { addTasks, deleteTask, fetchTasks, updateTask } from "../../api/task.api
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UiPaths from "../../paths/uiPaths";
+import { AddTaskFormData } from "../../hooks/useAddTaskForm";
 
 export const useFetchTasks = () => {
   let tasks: ITask[] = useSelector(selectTasks);
@@ -34,7 +35,7 @@ export const useAddTasks = () => {
   const[error, setError] = useState<Boolean>(false)
   const [loading, setLoading] = useState<Boolean>(false);
   const navigate = useNavigate();
-  const initAddTasks = async (body:any) => {
+  const initAddTasks = async (body:AddTaskFormData) => {
     setLoading(true)
     const response = await addTasks(body);
     setLoading(false)

@@ -1,12 +1,10 @@
 import React, { FC, Fragment, useState } from "react";
-import useForm from "../../hooks/useForm";
+import useAddTaskForm from "../../hooks/useAddTaskForm";
 import { Spinkit } from "../../modals";
-import { useNavigate } from "react-router-dom";
-import UiPaths from "../../paths/uiPaths";
 import { useAddTasks } from "./Task.hooks";
 
 const AddTaskForm: FC = () => {
-  const { formData, formErrors, handleChange, validateForm } = useForm({
+  const { addTaskFormData, addTaskFormErrors, handleChange, validateForm } = useAddTaskForm({
     title: "",
     description: "",
     date: new Date(),
@@ -17,7 +15,7 @@ const AddTaskForm: FC = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (validateForm()) {
-      initAddTasks(formData);
+      initAddTasks(addTaskFormData);
     } else {
       console.log("Form is not valid");
     }
@@ -41,11 +39,11 @@ const AddTaskForm: FC = () => {
                 type="text"
                 id="title"
                 name="title"
-                value={formData.title}
+                value={addTaskFormData.title}
                 onChange={handleChange}
                 className="mt-1 p-2 border-2 rounded-md w-full"
               />
-              <span className="text-red-500 text-xs">{formErrors.title}</span>
+              <span className="text-red-500 text-xs">{addTaskFormErrors.title}</span>
             </div>
 
             <div className="mb-4">
@@ -58,12 +56,12 @@ const AddTaskForm: FC = () => {
               <textarea
                 id="description"
                 name="description"
-                value={formData.description}
+                value={addTaskFormData.description}
                 onChange={handleChange}
                 className="mt-1 p-2 border-2 rounded-md w-full"
               />
               <span className="text-red-500 text-xs">
-                {formErrors.description}
+                {addTaskFormErrors.description}
               </span>
             </div>
 
@@ -79,34 +77,15 @@ const AddTaskForm: FC = () => {
                 id="date"
                 name="date"
                 value={
-                  formData.date instanceof Date
-                    ? formData.date.toISOString().split("T")[0]
-                    : formData.date || ""
+                  addTaskFormData.date instanceof Date
+                    ? addTaskFormData.date.toISOString().split("T")[0]
+                    : addTaskFormData.date || ""
                 }
                 onChange={handleChange}
                 className="mt-1 p-2 border-2 rounded-md w-full"
               />
-              <span className="text-red-500 text-xs">{formErrors.date}</span>
+              <span className="text-red-500 text-xs">{addTaskFormErrors.date}</span>
             </div>
-
-            {/* <div className="mb-4">
-              <label
-                htmlFor="status"
-                className="block text-lg font-medium text-gray-700"
-              >
-                Status:
-              </label>
-              <select
-                id="status"
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className="mt-1 p-2 border-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-              >
-                <option value="not_started">Not Started</option>
-                <option value="complete">Complete</option>
-              </select>
-            </div> */}
             <div className="flex justify-end">
               <button
                 type="submit"
