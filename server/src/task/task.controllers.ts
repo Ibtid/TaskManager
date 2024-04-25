@@ -29,17 +29,6 @@ class TaskController {
       .json({ tasks, msg: "All Todos have been fetched!" });
   };
 
-  getSingleTask = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const task = await Task.findById({ _id: id });
-
-    if (!task) {
-      throw new Error("Requested todo not found!");
-    }
-
-    res.status(StatusCodes.OK).json({ task, msg: "Success" });
-  };
-
   updateTask = async (req: Request, res: Response) => {
     const { id } = req.params;
     const updatedTask = await Task.findByIdAndUpdate(
