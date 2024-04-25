@@ -1,0 +1,12 @@
+.confirmation_card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(13, 13, 13, 0.5);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 2050;
+}
