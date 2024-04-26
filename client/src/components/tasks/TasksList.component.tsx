@@ -1,12 +1,12 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useEffect } from "react";
 import { TaskCard } from "./TaskCard.component";
 import { Spinkit } from "../../modals/index";
-import { useTaskManagement } from "../../hooks/tasks/Task.hooks";
+import { useTaskApi } from "../../hooks/tasks/useTaskApi";
 
 
 export const TaskList: FC = () => {
-  const { tasks, fetchAllTasks, loading } = useTaskManagement();
-  console.log(`TaskList component rendered ${tasks.length}`);
+  const { tasks, fetchAllTasks, loading } = useTaskApi();
+  
   useEffect(() => {
       fetchAllTasks()
   }, []);
@@ -21,7 +21,7 @@ export const TaskList: FC = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto grid grid-cols-1 gap-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 p-4">
+      <div className="container mx-auto grid grid-cols-1 gap-12 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 p-4">
         {tasks.map((task, index) => (
           <TaskCard
             title={task.title}
@@ -32,6 +32,7 @@ export const TaskList: FC = () => {
             date={task.date}
           />
         ))}
+        {tasks.length === 0 && <div>No tasks found</div>}
       </div>
     </Fragment>
   );

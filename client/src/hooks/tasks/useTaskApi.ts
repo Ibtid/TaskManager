@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import UiPaths from "../../paths/uiPaths";
 import { AddTaskFormData } from "./useAddTaskForm";
 
-export const useTaskManagement = () => {
+export const useTaskApi = () => {
   const dispatchTodo = useDispatch();
   const tasks: ITask[] = useSelector(selectTasks);
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const useTaskManagement = () => {
       setError(true);
       alert(response.data.msg);
     } else {
-      dispatchTodo(addAllFetchedTasks(response.data.tasks));
+      dispatchTodo(addAllFetchedTasks(response.data.data));
     }
   };
 
@@ -36,7 +36,7 @@ export const useTaskManagement = () => {
       setError(true);
       alert(response.data.msg);
     } else {
-      dispatchTodo(addTodo(response.data.task));
+      dispatchTodo(addTodo(response.data.data));
       navigate(UiPaths.TasksList);
     }
   };
@@ -50,7 +50,7 @@ export const useTaskManagement = () => {
       setError(true);
       alert(response.data.msg);
     } else {
-      dispatchTodo(deleteTodo(response.data.task));
+      dispatchTodo(deleteTodo(response.data.data));
     }
   };
 
@@ -63,7 +63,7 @@ export const useTaskManagement = () => {
       setError(true);
       alert(response.data.msg);
     } else {
-      dispatchTodo(editTodo(response.data.task));
+      dispatchTodo(editTodo(response.data.data));
     }
   };
 

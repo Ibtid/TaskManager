@@ -4,7 +4,7 @@ import StatusComponent from "../common/status/Status.component";
 import { ITaskCardProps } from "../../interfaces/task";
 import { ConfirmationCardModal, Spinkit } from "../../modals";
 
-import {useTaskManagement} from "../../hooks/tasks/Task.hooks";
+import {useTaskApi} from "../../hooks/tasks/useTaskApi";
 import Button from "../common/buttons/button";
 import deleteIcon from "../../img/delete.svg";
 import { formatDate } from "../../util/formatDate";
@@ -18,7 +18,7 @@ export const TaskCard: FC<ITaskCardProps> = ({
 }) => {
   const [showModal, setShowModal] = useState<Boolean>(false);
 
-  const { loading, error, deleteSelectedTask, updateSelectedTask } = useTaskManagement();
+  const { loading, error, deleteSelectedTask, updateSelectedTask } = useTaskApi();
 
   const confirmDelete = async () => {
     await deleteSelectedTask(_id);

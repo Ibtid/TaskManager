@@ -12,7 +12,7 @@ class TaskController {
     if (!title || !description || !date) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ task: {}, msg: "Todo has been created!", success: false });
+        .json({ data: {}, msg: "Todo has been created!", success: false });
     }
 
     req.body.status = "not_started";
@@ -21,11 +21,11 @@ class TaskController {
       const newTask = await Task.create(req.body);
       return res
         .status(StatusCodes.CREATED)
-        .json({ task: newTask, msg: "Todo has been created!", success: true });
+        .json({ data: newTask, msg: "Todo has been created!", success: true });
     } catch (error) {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ task: {}, msg: "Something went wrong!", success: false });
+        .json({ data: {}, msg: "Something went wrong!", success: false });
     }
   };
 
@@ -35,11 +35,11 @@ class TaskController {
 
       return res
         .status(StatusCodes.OK)
-        .json({ tasks, msg: "All Todos have been fetched!", success:true });
+        .json({ data:tasks, msg: "All Todos have been fetched!", success:true });
     } catch (error) {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ tasks:[], msg: "All Todos have been fetched!", success:false });
+        .json({ data:[], msg: "All Todos have been fetched!", success:false });
     }
    
   };
@@ -55,7 +55,7 @@ class TaskController {
     if (!updatedTask) {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ task:{}, msg: "Requested task not found!", success:false });
+        .json({ data:{}, msg: "Requested task not found!", success:false });
     }
 
     const filePath = path.join(__dirname, "taskLog.txt");
@@ -73,7 +73,7 @@ class TaskController {
 
     res
       .status(StatusCodes.OK)
-      .json({ task: {}, msg: "Todo has been updated", success:true });
+      .json({ data: {}, msg: "Todo has been updated", success:true });
   };
 
   deleteTask = async (req: Request, res: Response) => {
@@ -83,12 +83,12 @@ class TaskController {
     if (!deletedTask) {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ task:{}, msg: "Requested task not found!", success:false });
+        .json({ data:{}, msg: "Requested task not found!", success:false });
     }
 
     res
       .status(StatusCodes.OK)
-      .json({ task: deletedTask, msg: "Todo has been deleted", success:true });
+      .json({ data: deletedTask, msg: "Todo has been deleted", success:true });
   };
 }
 

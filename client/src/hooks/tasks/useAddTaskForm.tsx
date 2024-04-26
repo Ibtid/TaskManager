@@ -3,7 +3,7 @@ import { useState, ChangeEvent } from 'react';
 export interface AddTaskFormData {
   title: string;
   description: string;
-  date: Date;
+  date: Date|null;
   // status: "not_started" | "complete";
 }
 

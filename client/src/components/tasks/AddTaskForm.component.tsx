@@ -1,18 +1,18 @@
 import React, { FC, Fragment, useState } from "react";
 import useAddTaskForm from "../../hooks/tasks/useAddTaskForm";
 import { Spinkit } from "../../modals";
-import { useTaskManagement } from "../../hooks/tasks/Task.hooks";
+import { useTaskApi } from "../../hooks/tasks/useTaskApi";
 
 const AddTaskForm: FC = () => {
   const { addTaskFormData, addTaskFormErrors, handleChange, validateForm } = useAddTaskForm({
     title: "",
     description: "",
-    date: new Date(),
+    date: null,
   });
 
-  const { addNewTask, error, loading } = useTaskManagement();
+  const { addNewTask, error, loading } = useTaskApi();
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
       addNewTask(addTaskFormData);
