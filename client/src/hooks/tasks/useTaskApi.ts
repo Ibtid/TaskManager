@@ -63,6 +63,8 @@ export const useTaskApi = () => {
       setError(true);
       alert(response.data.msg);
     } else {
+      alert(response.data.msg);
+      console.log(response.data)
       dispatchTodo(editTodo(response.data.data));
     }
   };

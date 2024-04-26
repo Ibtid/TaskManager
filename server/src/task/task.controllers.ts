@@ -73,7 +73,7 @@ class TaskController {
 
     res
       .status(StatusCodes.OK)
-      .json({ data: {}, msg: "Todo has been updated", success:true });
+      .json({ data: updatedTask, msg: "Todo has been updated", success:true });
   };
 
   deleteTask = async (req: Request, res: Response) => {
