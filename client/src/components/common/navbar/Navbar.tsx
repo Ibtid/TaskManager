@@ -4,6 +4,7 @@ import UiPaths from "../../../paths/uiPaths";
 import { Outlet, Link } from "react-router-dom";
 import Button from "../buttons/button";
 import addIcon from "../../../img/add.svg";
+import back from "../../../img/back.svg"
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Navbar = () => {
               <Button
                 onClick={() => navigate(UiPaths.TasksList)}
                 label="Back"
-                iconSrc={addIcon}
+                iconSrc={back}
                 smMarginRight={true}
                 bgColor="bg-gray-800"
                 hoverBgColor="hover:bg-blue-700"
