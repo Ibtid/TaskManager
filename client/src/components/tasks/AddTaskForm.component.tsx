@@ -1,7 +1,7 @@
 import React, { FC, Fragment, useState } from "react";
-import useAddTaskForm from "../../hooks/useAddTaskForm";
+import useAddTaskForm from "../../hooks/tasks/useAddTaskForm";
 import { Spinkit } from "../../modals";
-import { useAddTasks } from "./Task.hooks";
+import { useTaskManagement } from "../../hooks/tasks/Task.hooks";
 
 const AddTaskForm: FC = () => {
   const { addTaskFormData, addTaskFormErrors, handleChange, validateForm } = useAddTaskForm({
@@ -10,12 +10,12 @@ const AddTaskForm: FC = () => {
     date: new Date(),
   });
 
-  const { initAddTasks, error, loading } = useAddTasks();
+  const { addNewTask, error, loading } = useTaskManagement();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (validateForm()) {
-      initAddTasks(addTaskFormData);
+      addNewTask(addTaskFormData);
     } else {
       console.log("Form is not valid");
     }

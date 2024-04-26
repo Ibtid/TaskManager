@@ -1,13 +1,14 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { TaskCard } from "./TaskCard.component";
 import { Spinkit } from "../../modals/index";
-import { useFetchTasks } from "./Task.hooks";
+import { useTaskManagement } from "../../hooks/tasks/Task.hooks";
+
 
 export const TaskList: FC = () => {
-  const { tasks, initFetchTasks, loading } = useFetchTasks();
+  const { tasks, fetchAllTasks, loading } = useTaskManagement();
   console.log(`TaskList component rendered ${tasks.length}`);
   useEffect(() => {
-      initFetchTasks()
+      fetchAllTasks()
   }, []);
 
   return (

@@ -1,17 +1,13 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import calender from "../../img/calender.svg";
-import UiPaths from "../../paths/uiPaths";
-import { useNavigate } from "react-router-dom";
 import StatusComponent from "../common/status/Status.component";
-import { ITask, ITaskCardProps } from "../../interfaces/task";
-import { useDispatch } from "react-redux";
-import { deleteTodo, selectTask, selectedTask } from "../../todosSlice";
-import { useSelector } from "react-redux";
+import { ITaskCardProps } from "../../interfaces/task";
 import { ConfirmationCardModal, Spinkit } from "../../modals";
 
-import { useDeleteTasks, useUpdateTasks } from "./Task.hooks";
+import {useTaskManagement} from "../../hooks/tasks/Task.hooks";
 import Button from "../common/buttons/button";
 import deleteIcon from "../../img/delete.svg";
+import { formatDate } from "../../util/formatDate";
 
 export const TaskCard: FC<ITaskCardProps> = ({
   _id,
@@ -22,28 +18,27 @@ export const TaskCard: FC<ITaskCardProps> = ({
 }) => {
   const [showModal, setShowModal] = useState<Boolean>(false);
 
-  const { loading, error, initDeleteTasks } = useDeleteTasks();
-  const { initUpdateTasks } = useUpdateTasks();
+  const { loading, error, deleteSelectedTask, updateSelectedTask } = useTaskManagement();
 
   const confirmDelete = async () => {
-    await initDeleteTasks(_id);
+    await deleteSelectedTask(_id);
     setShowModal(false);
   };
 
   useEffect(() => {
     const currentDate = Date.now();
-    const dateObject = new Date(date); // Create a Date object from the string date
-    const timeDifference = dateObject.getTime() - currentDate; // Difference in milliseconds
+    const dateObject = new Date(date); 
+    const timeDifference = dateObject.getTime() - currentDate;
 
     if (timeDifference > 0) {
       const timer = setTimeout(() => {
-        initUpdateTasks(_id);
+        updateSelectedTask(_id);
       }, timeDifference);
 
       return () => {
-        clearTimeout(timer); // Clear the timer if the component unmounts before the timeout
+        clearTimeout(timer); 
       };
-    } else if (status == "not_started") initUpdateTasks(_id);
+    } else if (status == "not_started") updateSelectedTask(_id);
   }, []);
 
   return (
@@ -100,15 +95,3 @@ export const TaskCard: FC<ITaskCardProps> = ({
   );
 };
 
-function formatDate(date: Date): string {
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const day = date.getDate();
-  const month = date.toLocaleString("en-US", { month: "long" });
-  const year = date.getFullYear();
-  const amOrPm = hours >= 12 ? "PM" : "AM";
-  const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-  const formattedMinutes = minutes.toString().padStart(2, "0");
-
-  return `${formattedHours}:${formattedMinutes} ${amOrPm} ${month} ${day}, ${year}`;
-}
