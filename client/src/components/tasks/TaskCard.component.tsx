@@ -26,34 +26,34 @@ export const TaskCard: FC<ITaskCardProps> = ({
     setShowModal(false);
   };
 
-  useEffect(() => {
-    const currentDate = Date.now();
-    const dateObject = new Date(date);
-    const timeDifference = dateObject.getTime() - currentDate;
+  // useEffect(() => {
+  //   const currentDate = Date.now();
+  //   const dateObject = new Date(date);
+  //   const timeDifference = dateObject.getTime() - currentDate;
 
-    if (timeDifference > 0) {
-      const timer = setTimeout(() => {
-        updateSelectedTask({
-          _id,
-          title,
-          description,
-          status,
-          date,
-        });
-      }, timeDifference);
+  //   if (timeDifference > 0) {
+  //     const timer = setTimeout(() => {
+  //       updateSelectedTask({
+  //         _id,
+  //         title,
+  //         description,
+  //         status,
+  //         date,
+  //       });
+  //     }, timeDifference);
 
-      return () => {
-        clearTimeout(timer);
-      };
-    } else if (status == "not_started")
-      updateSelectedTask({
-        _id,
-        title,
-        description,
-        status,
-        date,
-      });
-  }, []);
+  //     return () => {
+  //       clearTimeout(timer);
+  //     };
+  //   } else if (status == "not_started")
+  //     updateSelectedTask({
+  //       _id,
+  //       title,
+  //       description,
+  //       status,
+  //       date,
+  //     });
+  // }, []);
 
   return (
     <Fragment>

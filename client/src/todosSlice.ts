@@ -48,7 +48,7 @@ const todosSlice = createSlice({
       const task = state.tasks.find((task) => task._id === action.payload._id);
       if (task) {
         // task.title = action.payload.title;
-        task.status = action.payload.status;
+        task.status = 'complete';
         // task.date = action.payload.date;
         // task.description = action.payload.description;
       }
