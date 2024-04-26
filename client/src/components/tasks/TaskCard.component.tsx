@@ -4,7 +4,7 @@ import StatusComponent from "../common/status/Status.component";
 import { ITaskCardProps } from "../../interfaces/task";
 import { ConfirmationCardModal, Spinkit } from "../../modals";
 
-import {useTaskApi} from "../../hooks/tasks/useTaskApi";
+import { useTaskApi } from "../../hooks/tasks/useTaskApi";
 import Button from "../common/buttons/button";
 import deleteIcon from "../../img/delete.svg";
 import { formatDate } from "../../util/formatDate";
@@ -18,7 +18,8 @@ export const TaskCard: FC<ITaskCardProps> = ({
 }) => {
   const [showModal, setShowModal] = useState<Boolean>(false);
 
-  const { loading, error, deleteSelectedTask, updateSelectedTask } = useTaskApi();
+  const { loading, error, deleteSelectedTask, updateSelectedTask } =
+    useTaskApi();
 
   const confirmDelete = async () => {
     await deleteSelectedTask(_id);
@@ -27,18 +28,31 @@ export const TaskCard: FC<ITaskCardProps> = ({
 
   useEffect(() => {
     const currentDate = Date.now();
-    const dateObject = new Date(date); 
+    const dateObject = new Date(date);
     const timeDifference = dateObject.getTime() - currentDate;
 
     if (timeDifference > 0) {
       const timer = setTimeout(() => {
-        updateSelectedTask(_id);
+        updateSelectedTask({
+          _id,
+          title,
+          description,
+          status,
+          date,
+        });
       }, timeDifference);
 
       return () => {
-        clearTimeout(timer); 
+        clearTimeout(timer);
       };
-    } else if (status == "not_started") updateSelectedTask(_id);
+    } else if (status == "not_started")
+      updateSelectedTask({
+        _id,
+        title,
+        description,
+        status,
+        date,
+      });
   }, []);
 
   return (
@@ -57,9 +71,7 @@ export const TaskCard: FC<ITaskCardProps> = ({
       )}
       <div className="flex flex-col justify-between bg-slate-50 p-6 rounded-lg shadow-md max-w-lg mx-auto sm:max-w-xl lg:max-w-2xl xl:max-w-3xl w-72 md:w-80 lg:w-96">
         <div className="flex flex-col items-center justify-between mb-6">
-          <div className="text-2xl lg:text-2xl font-semibold mb-4">
-            {title}
-          </div>
+          <div className="text-2xl lg:text-2xl font-semibold mb-4">{title}</div>
           <div className="flex items-center text-xs md:text-sm">
             <div className="bg-gray-200 pt-1 pb-1 pr-2 pl-2 text rounded-l-md flex items-center">
               <img
@@ -94,4 +106,3 @@ export const TaskCard: FC<ITaskCardProps> = ({
     </Fragment>
   );
 };
-

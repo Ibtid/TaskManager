@@ -35,17 +35,23 @@ class TaskController {
 
       return res
         .status(StatusCodes.OK)
-        .json({ data:tasks, msg: "All Todos have been fetched!", success:true });
+        .json({
+          data: tasks,
+          msg: "All Todos have been fetched!",
+          success: true,
+        });
     } catch (error) {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ data:[], msg: "All Todos have been fetched!", success:false });
+        .json({
+          data: [],
+          msg: "All Todos have been fetched!",
+          success: false,
+        });
     }
-   
   };
 
-  updateTask = async (req: Request, res: Response) => {
-    const { id } = req.params;
+  updateTask = async (id: string) => {
     const updatedTask = await Task.findByIdAndUpdate(
       { _id: id },
       { status: "complete" },
@@ -53,27 +59,22 @@ class TaskController {
     );
 
     if (!updatedTask) {
-      return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ data:{}, msg: "Requested task not found!", success:false });
+      console.log("not found");
+    } else {
+      const filePath = path.join(__dirname, "taskLog.txt");
+      const logData = `Task ID: ${
+        updatedTask._id
+      }, Time: ${new Date().toISOString()}, Description: ${
+        updatedTask.description
+      }\n`;
+
+      fs.appendFile(filePath, logData, (err) => {
+        if (err) {
+          console.error("Error appending to file:", err);
+        }
+      });
+      console.log("updated");
     }
-
-    const filePath = path.join(__dirname, "taskLog.txt");
-    const logData = `Task ID: ${
-      updatedTask._id
-    }, Time: ${new Date().toISOString()}, Description: ${
-      updatedTask.description
-    }\n`;
-
-    fs.appendFile(filePath, logData, (err) => {
-      if (err) {
-        console.error("Error appending to file:", err);
-      }
-    });
-
-    res
-      .status(StatusCodes.OK)
-      .json({ data: updatedTask, msg: "Todo has been updated", success:true });
   };
 
   deleteTask = async (req: Request, res: Response) => {
@@ -83,12 +84,12 @@ class TaskController {
     if (!deletedTask) {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ data:{}, msg: "Requested task not found!", success:false });
+        .json({ data: {}, msg: "Requested task not found!", success: false });
     }
 
     res
       .status(StatusCodes.OK)
-      .json({ data: deletedTask, msg: "Todo has been deleted", success:true });
+      .json({ data: deletedTask, msg: "Todo has been deleted", success: true });
   };
 }
 

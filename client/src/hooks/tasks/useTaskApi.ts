@@ -54,19 +54,8 @@ export const useTaskApi = () => {
     }
   };
 
-  const updateSelectedTask = async (id: string) => {
-    setLoading(true);
-    const response = await updateTask(id);
-    setLoading(false);
-
-    if (!response.data.success) {
-      setError(true);
-      alert(response.data.msg);
-    } else {
-      alert(response.data.msg);
-      console.log(response.data)
-      dispatchTodo(editTodo(response.data.data));
-    }
+  const updateSelectedTask = async (task: ITask) => {
+      // dispatchTodo(editTodo(task));
   };
 
   return {
