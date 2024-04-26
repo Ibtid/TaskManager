@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ITask } from "../../interfaces/task";
 import { addAllFetchedTasks, addTodo, deleteTodo, editTodo, selectTasks } from "../../todosSlice";
-import { addTasks, deleteTask, fetchTasks, updateTask } from "../../api/task.api";
+import { addTasks, deleteTask, fetchTasks } from "../../api/task.api";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UiPaths from "../../paths/uiPaths";
@@ -55,7 +55,7 @@ export const useTaskApi = () => {
   };
 
   const updateSelectedTask = async (task: ITask) => {
-      // dispatchTodo(editTodo(task));
+      dispatchTodo(editTodo(task));
   };
 
   return {
